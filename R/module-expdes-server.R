@@ -49,7 +49,7 @@ expdesServer <- function(input, output, session,parent_session, loadpage_input, 
     }
 
     output$result_plot = renderPlotly({
-      designSampleSizePlots(future_exp(), isPlotly = FALSE)
+      designSampleSizePlots(future_exp(), isPlotly = TRUE)
     })
 
     #download
