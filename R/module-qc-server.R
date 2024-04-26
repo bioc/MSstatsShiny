@@ -164,6 +164,7 @@ qcServer <- function(input, output, session,parent_session, loadpage_input,get_d
       if(loadpage_input()$DDA_DIA == "TMT"){
         plot <- dataProcessPlotsTMT(preprocess_data(),
                             type=input$type1,
+                            featureName = input$fname,
                             ylimUp = FALSE,
                             ylimDown = FALSE,
                             which.Protein = protein,
