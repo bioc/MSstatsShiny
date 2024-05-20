@@ -411,18 +411,20 @@ statmodelServer <- function(input, output, session,parent_session, loadpage_inpu
 
     } else if(loadpage_input()$DDA_DIA=="TMT"){
       tryCatch({
-        plot1 = MSstatsShiny::groupComparisonPlots2(data=data_comparison()$ComparisonResult,
-                                                    type=input$typeplot,
-                                                    sig=input$sig,
-                                                    FCcutoff=input$FC,
-                                                    logBase.pvalue=input$logp,
-                                                    ProteinName=input$pname,
-                                                    numProtein=input$nump, 
-                                                    clustering=input$cluster, 
-                                                    which.Comparison=input$whichComp,
-                                                    which.Protein = input$whichProt,
-                                                    address=path1(),
-                                                    savePDF=pdf)
+        # makes use of MSstats groupComparisonPlots function
+        plot1 = groupComparisonPlots(data=data_comparison()$ComparisonResult,
+                                     type=input$typeplot,
+                                     sig=input$sig,
+                                     FCcutoff=input$FC,
+                                     logBase.pvalue=as.numeric(input$logp),
+                                     ProteinName=input$pname,
+                                     numProtein=input$nump, 
+                                     clustering=input$cluster, 
+                                     which.Comparison=input$whichComp,
+                                     which.Protein = input$whichProt,
+                                     height = input$height,
+                                     address="Ex_",
+                                     isPlotly = TRUE)[[1]]
       remove_modal_spinner()
       },
       error = function(e){
@@ -715,8 +717,8 @@ statmodelServer <- function(input, output, session,parent_session, loadpage_inpu
 
   observeEvent(input$viewresults, {
     ns <- session$ns
-    # TMT and PTM plotly plots are still under development
-    if ((loadpage_input()$DDA_DIA == "TMT") || (loadpage_input()$BIO == "PTM")) {
+    # PTM plotly plots are still under development
+    if (loadpage_input()$BIO == "PTM") {
       output$comp_plots = renderPlot({
         group_comparison(FALSE, FALSE)
       })

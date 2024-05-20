@@ -236,7 +236,7 @@ qcUI <- function(id) {
                           #                  tags$br(),
                           #                  tags$h4("Calculation in progress...")),
                           uiOutput(ns("showplot")),
-                          disabled(downloadButton(ns("saveplot"), "Save this plot"))
+                          # disabled(downloadButton(ns("saveplot"), "Save this plot"))
                  ),
                  tabPanel("Download Data", 
                           #verbatimTextOutput('effect'),
