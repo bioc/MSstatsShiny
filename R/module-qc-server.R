@@ -107,15 +107,15 @@ qcServer <- function(input, output, session,parent_session, loadpage_input,get_d
     print("Inside render UI and getting input$type1")
     print(input$type1)
     if ((loadpage_input()$BIO!="PTM" && input$type1 == "QCPlot")) {
-      if((loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="sky") || (loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="ump")){
-        selectizeInput(ns("which"), "Show plot for", 
-                       choices = c("", "ALL PROTEINS" = "allonly", 
-                                   unique(get_data()[2])))
-      } else {
-        selectizeInput(ns("which"), "Show plot for", 
-                       choices = c("", "ALL PROTEINS" = "allonly", 
-                                   unique(get_data()[1])))
-      }
+      # if((loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="sky") || (loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="ump")){
+      #   selectizeInput(ns("which"), "Show plot for", 
+      #                  choices = c("", "ALL PROTEINS" = "allonly", 
+      #                              unique(get_data()[2])))
+      # } else {
+      selectizeInput(ns("which"), "Show plot for", 
+                     choices = c("", "ALL PROTEINS" = "allonly", 
+                                 unique(get_data()[1])))
+      # }
     } else if (loadpage_input()$BIO == "PTM"){
       if (input$type1 == "QCPlot"){
         selectizeInput(ns("which"), "Show plot for", 
