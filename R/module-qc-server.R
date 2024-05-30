@@ -107,15 +107,15 @@ qcServer <- function(input, output, session,parent_session, loadpage_input,get_d
     print("Inside render UI and getting input$type1")
     print(input$type1)
     if ((loadpage_input()$BIO!="PTM" && input$type1 == "QCPlot")) {
-      if((loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="sky") || (loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="ump")){
-        selectizeInput(ns("which"), "Show plot for", 
-                       choices = c("", "ALL PROTEINS" = "allonly", 
-                                   unique(get_data()[2])))
-      } else {
-        selectizeInput(ns("which"), "Show plot for", 
-                       choices = c("", "ALL PROTEINS" = "allonly", 
-                                   unique(get_data()[1])))
-      }
+      # if((loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="sky") || (loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="ump")){
+      #   selectizeInput(ns("which"), "Show plot for", 
+      #                  choices = c("", "ALL PROTEINS" = "allonly", 
+      #                              unique(get_data()[2])))
+      # } else {
+      selectizeInput(ns("which"), "Show plot for", 
+                     choices = c("", "ALL PROTEINS" = "allonly", 
+                                 unique(get_data()[1])))
+      # }
     } else if (loadpage_input()$BIO == "PTM"){
       if (input$type1 == "QCPlot"){
         selectizeInput(ns("which"), "Show plot for", 
@@ -162,17 +162,17 @@ qcServer <- function(input, output, session,parent_session, loadpage_input,get_d
       # }
       
       if(loadpage_input()$DDA_DIA == "TMT"){
-        
-        dataProcessPlotsTMT(preprocess_data(),
+        plot <- dataProcessPlotsTMT(preprocess_data(),
                             type=input$type1,
+                            featureName = input$fname,
                             ylimUp = FALSE,
                             ylimDown = FALSE,
                             which.Protein = protein,
-                            originalPlot = TRUE,
+                            originalPlot = original,
                             summaryPlot = input$summ,
-                            address = file
-        )
-
+                            address = file, isPlotly = TRUE
+        )[[1]]
+        return(plot)
         
       } else if (loadpage_input()$BIO == "PTM"){
         
@@ -370,8 +370,8 @@ qcServer <- function(input, output, session,parent_session, loadpage_input,get_d
   output$showplot = renderUI({
     ns<- session$ns
     
-    # TMT and PTM plotly plots are still under development
-    if ((loadpage_input()$DDA_DIA == "TMT") || (loadpage_input()$BIO == "PTM")) {
+    # PTM plotly plots are still under development
+    if (loadpage_input()$BIO == "PTM") {
       output$theplot = renderPlot(theplot())
       op <- plotOutput(ns("theplot"))
     } else {
