@@ -31,13 +31,13 @@ qcServer <- function(input, output, session,parent_session, loadpage_input,get_d
   output$Names = renderUI({
     ns <- session$ns
     if (input$standards == "Proteins") {
-      if((loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="sky")||(loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="ump")){
-        
-        selectizeInput(ns("names"), "choose standard", unique(get_data()[2]), multiple = TRUE)
-      }
-      else{
-        selectizeInput(ns("names"), "choose standard", unique(get_data()[1]), multiple = TRUE)
-      }
+      # if((loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="sky")||(loadpage_input()$DDA_DIA=="LType" && loadpage_input()$filetype=="ump")){
+      #   
+      #   selectizeInput(ns("names"), "choose standard", unique(get_data()[2]), multiple = TRUE)
+      # }
+      # else{
+      selectizeInput(ns("names"), "choose standard", unique(get_data()[1]), multiple = TRUE)
+      # }
       
     }
     else if (input$standards == "Peptides") {
